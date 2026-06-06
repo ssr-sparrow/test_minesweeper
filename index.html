@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101826">
+    <title>扫雷 · 自定义棋盘</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">MINESWEEPER</p>
+          <h1>扫雷</h1>
+          <p class="subtitle">从轻松的无雷散步，到 30 × 30 的硬核雷区。</p>
+        </div>
+        <button id="restartButton" class="icon-button" type="button" aria-label="重新开始当前游戏" title="重新开始">
+          <span aria-hidden="true">↻</span>
+        </button>
+      </header>
+
+      <section class="control-card" aria-label="游戏设置">
+        <form id="settingsForm" novalidate>
+          <div class="field">
+            <label for="rowsInput">高度</label>
+            <div class="input-wrap">
+              <input id="rowsInput" name="rows" type="number" min="2" max="30" value="9" inputmode="numeric">
+              <span>行</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="colsInput">宽度</label>
+            <div class="input-wrap">
+              <input id="colsInput" name="cols" type="number" min="2" max="30" value="9" inputmode="numeric">
+              <span>列</span>
+            </div>
+          </div>
+          <div class="field field-mines">
+            <label for="minesInput">雷数</label>
+            <div class="input-wrap">
+              <input id="minesInput" name="mines" type="number" min="0" max="81" value="10" inputmode="numeric">
+              <span id="mineLimit">/ 81</span>
+            </div>
+          </div>
+          <button class="primary-button" type="submit">开始新游戏</button>
+        </form>
+        <div class="interaction-settings">
+          <label class="press-setting" for="pressPreviewInput">
+            <input id="pressPreviewInput" type="checkbox" checked>
+            <span class="checkmark" aria-hidden="true"></span>
+            <span>
+              <strong>经典按压预览</strong>
+              <small>按住数字时也会预览周围未翻方块</small>
+            </span>
+          </label>
+          <div class="timing-setting">
+            <span>
+              <strong>翻格生效时机</strong>
+              <small>选择按下立即翻开，或松开后翻开</small>
+            </span>
+            <div class="segmented-control timing-control" aria-label="翻格生效时机">
+              <button class="timing-button" type="button" data-timing="down" aria-pressed="false">按下时</button>
+              <button class="timing-button active" type="button" data-timing="release" aria-pressed="true">松开时</button>
+            </div>
+          </div>
+        </div>
+        <p id="formError" class="form-error" role="alert" aria-live="polite"></p>
+      </section>
+
+      <section class="status-card" aria-label="游戏状态">
+        <div class="metric">
+          <span class="metric-label">剩余雷数</span>
+          <strong id="remainingMines">10</strong>
+        </div>
+        <div class="status-center">
+          <span id="statusIcon" class="status-icon" aria-hidden="true">🙂</span>
+          <strong id="statusText">准备开始</strong>
+        </div>
+        <div class="metric metric-right">
+          <span class="metric-label">用时</span>
+          <strong><span id="timer">0</span><small> 秒</small></strong>
+        </div>
+      </section>
+
+      <section class="mode-switch" aria-label="触屏操作模式">
+        <span>点击模式</span>
+        <div class="segmented-control">
+          <button class="mode-button active" type="button" data-mode="reveal" aria-pressed="true">翻格</button>
+          <button class="mode-button" type="button" data-mode="flag" aria-pressed="false">插旗</button>
+        </div>
+      </section>
+
+      <section class="board-frame" aria-label="扫雷棋盘区域">
+        <div id="board" class="board" role="grid" aria-label="扫雷棋盘"></div>
+      </section>
+
+      <p class="help-text">
+        电脑：左键翻格，右键插旗；按住数字可预览周围，旗数匹配后翻开。手机：使用上方模式切换。
+      </p>
+    </main>
+
+    <div id="resultOverlay" class="result-overlay" hidden>
+      <div class="result-dialog" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+        <span id="resultEmoji" class="result-emoji" aria-hidden="true">🏆</span>
+        <h2 id="resultTitle">排雷成功</h2>
+        <p id="resultDetail"></p>
+        <div class="dialog-actions">
+          <button id="playAgainButton" class="primary-button" type="button">再来一局</button>
+          <button id="closeResultButton" class="secondary-button" type="button">查看棋盘</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
